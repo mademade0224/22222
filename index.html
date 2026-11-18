@@ -140,20 +140,42 @@ document.getElementById("start").addEventListener("click", function() {
 
 });
 
-// 画像が逃げる処理
+
+// 画像
 const img = document.getElementById("escapeImage");
 
+// STARTボタン
+document.getElementById("start").addEventListener("click", function() {
+
+    document.getElementById("titleScreen").style.display = "none";
+    document.getElementById("gameScreen").style.display = "block";
+
+    // 初期位置
+    img.style.left = "100px";
+    img.style.top = "100px";
+
+});
+
+
+// 逃走処理
 function escape() {
 
     const maxX = window.innerWidth - img.offsetWidth;
     const maxY = window.innerHeight - img.offsetHeight;
 
-    const x = Math.random() * maxX;
-    const y = Math.random() * maxY;
+    const x = Math.random() * Math.max(0, maxX);
+    const y = Math.random() * Math.max(0, maxY);
 
     img.style.left = x + "px";
     img.style.top = y + "px";
+
 }
+
+// マウスが触れたら逃げる
+img.addEventListener("mouseenter", escape);
+
+
+// セリフ一覧
 const dialogues = [
     "発挑考…見調振♡",
     "お前の殻を…破ってやる♡",
@@ -161,7 +183,7 @@ const dialogues = [
     "規律ある自由…感じて？"
 ];
 
-// 画像をクリックしたとき
+// クリックしたらセリフ表示
 img.addEventListener("click", function() {
 
     const random = Math.floor(Math.random() * dialogues.length);
@@ -172,6 +194,7 @@ img.addEventListener("click", function() {
     dialogue.style.display = "block";
 
 });
+
 
 </script>
 
