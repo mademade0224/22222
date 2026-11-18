@@ -104,6 +104,20 @@ body {
     min-width: 200px;
     text-align: center;
 }
+
+    #fade {
+  position: fixed;
+  inset: 0;
+  background: black;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1.5s ease;
+  z-index: 9999;
+}
+
+#fade.active {
+  opacity: 1;
+}
 </style>
 </head>
 
@@ -188,27 +202,33 @@ let gamestarted = false;
 // クリックしたらセリフ表示
 img.addEventListener("click", function() {
 
-    const random = Math.floor(Math.random() * dialogues.length);
+let gameStarted = false;
 
-    const dialogue = document.getElementById("dialogue");
+img.addEventListener("click", function() {
+  const random = Math.floor(Math.random() * dialogues.length);
+  const dialogue = document.getElementById("dialogue");
 
-    dialogue.textContent = dialogues[random];
-    dialogue.style.display = "block";
+  dialogue.textContent = dialogues[random];
+  dialogue.style.display = "block";
 
-    if (!gamestarted) {
-        gamestarted = true;
+  if (!gameStarted) {
+    gameStarted = true;
 
-        console.log("乙女ゲーム")
+    // 2秒後に暗転開始
+    setTimeout(function() {
+      document.getElementById("fade").classList.add("active");
 
-        setTimeout(function() {
-            window.location.href = "otome/index.html"
-        }, 5000);
-    }
+      // 暗転完了後に乙女ゲームへ移動
+      setTimeout(function() {
+        window.location.href = "otome/index.html";
+      }, 1500);
 
+    }, 2000);
+  }
 });
 
 
 </script>
-
+<div id="fade"></div>
 </body>
 </html>
