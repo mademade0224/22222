@@ -54,6 +54,8 @@ body {
 
 /* STARTボタン */
 #start {
+        z-index: 10;
+    pointer-events: auto;
     position: absolute;
     top: 70%;
     left: 50%;
@@ -132,6 +134,9 @@ document.getElementById("start").addEventListener("click", function() {
 
     // ゲーム画面を表示
     document.getElementById("gameScreen").style.display = "block";
+
+        img.style.left = "100px";
+    img.style.top = "100px";
 
 });
 
