@@ -140,40 +140,22 @@ body {
 
 <script>
 
-// STARTボタン
-document.getElementById("start").addEventListener("click", function() {
-
-    // タイトル画面を消す
-    document.getElementById("titleScreen").style.display = "none";
-
-    // ゲーム画面を表示
-    document.getElementById("gameScreen").style.display = "block";
-
-        img.style.left = "100px";
-    img.style.top = "100px";
-
-});
-
 
 // 画像
 const img = document.getElementById("escapeImage");
 
 // STARTボタン
 document.getElementById("start").addEventListener("click", function() {
-
     document.getElementById("titleScreen").style.display = "none";
     document.getElementById("gameScreen").style.display = "block";
 
     // 初期位置
     img.style.left = "100px";
     img.style.top = "100px";
-
 });
-
 
 // 逃走処理
 function escape() {
-
     const maxX = window.innerWidth - img.offsetWidth;
     const maxY = window.innerHeight - img.offsetHeight;
 
@@ -182,12 +164,10 @@ function escape() {
 
     img.style.left = x + "px";
     img.style.top = y + "px";
-
 }
 
 // マウスが触れたら逃げる
 img.addEventListener("mouseenter", escape);
-
 
 // セリフ一覧
 const dialogues = [
@@ -197,35 +177,33 @@ const dialogues = [
     "規律ある自由…感じて？"
 ];
 
-let gamestarted = false;
-    
-// クリックしたらセリフ表示
-img.addEventListener("click", function() {
-
 let gameStarted = false;
 
+// クリックしたらセリフ表示
 img.addEventListener("click", function() {
-  const random = Math.floor(Math.random() * dialogues.length);
-  const dialogue = document.getElementById("dialogue");
+    const random = Math.floor(Math.random() * dialogues.length);
+    const dialogue = document.getElementById("dialogue");
 
-  dialogue.textContent = dialogues[random];
-  dialogue.style.display = "block";
+    dialogue.textContent = dialogues[random];
+    dialogue.style.display = "block";
 
-  if (!gameStarted) {
-    gameStarted = true;
+    // 最初のクリックだけ演出を開始
+    if (!gameStarted) {
+        gameStarted = true;
 
-    // 2秒後に暗転開始
-    setTimeout(function() {
-      document.getElementById("fade").classList.add("active");
+        // 2秒後に暗転
+        setTimeout(function() {
+            document.getElementById("fade").classList.add("active");
 
-      // 暗転完了後に乙女ゲームへ移動
-      setTimeout(function() {
-        window.location.href = "otome/index.html";
-      }, 1500);
+            // 1.5秒かけて暗転した後に移動
+            setTimeout(function() {
+                window.location.href = "otome/index.html";
+            }, 1500);
 
-    }, 2000);
-  }
+        }, 2000);
+    }
 });
+
 
 
 </script>
