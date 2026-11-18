@@ -154,14 +154,24 @@ function escape() {
     img.style.left = x + "px";
     img.style.top = y + "px";
 }
-
-img.addEventListener("mouseenter", escape);
-
-    const dialogues = [
-        "発挑考…見調振♡"
-        "お前の殻を…破ってやる♡"
-    "最近遅刻が多いんじゃない？"
+const dialogues = [
+    "発挑考…見調振♡",
+    "お前の殻を…破ってやる♡",
+    "最近遅刻が多いんじゃない？",
     "規律ある自由…感じて？"
+];
+
+// 画像をクリックしたとき
+img.addEventListener("click", function() {
+
+    const random = Math.floor(Math.random() * dialogues.length);
+
+    const dialogue = document.getElementById("dialogue");
+
+    dialogue.textContent = dialogues[random];
+    dialogue.style.display = "block";
+
+});
 
 </script>
 
