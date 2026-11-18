@@ -1,1 +1,92 @@
 
+
+let currentIndex = 0;
+let affection = 0;
+
+const nameElement = document.getElementById("name");
+const textElement = document.getElementById("text");
+const choicesElement = document.getElementById("choices");
+const nextButton = document.getElementById("next-button");
+
+function showStep() {
+  const step = story[currentIndex];
+
+  // ← 追加：stepにbgが指定されていたら画像を切り替える
+  if (step.bg) {
+    bgElement.src = step.bg;
+  }
+  // ストーリーが最後まで進んだ場合
+  if (!step) {
+    showEnd();
+    return;
+  }
+
+  // 表示をリセット
+  choicesElement.innerHTML = "";
+  nextButton.style.display = "none";
+
+  nameElement.textContent = step.name || "";
+  textElement.textContent = step.text || "";
+
+  // 選択肢の場合
+  if (step.type === "choice") {
+    showChoices(step.choices);
+    return;
+  }
+
+  // エンディングの場合
+  if (step.type === "ending") {
+    nextButton.textContent = "タイトルへ";
+    nextButton.style.display = "block";
+    nextButton.onclick = showEnd;
+    return;
+  }
+
+  // 通常の会話の場合
+  nextButton.textContent = "次へ ▼";
+  nextButton.style.display = "block";
+  nextButton.onclick = nextStep;
+}
+
+function showChoices(choices) {
+  choices.forEach((choice) => {
+    const button = document.createElement("button");
+
+    button.className = "choice-button";
+    button.textContent = choice.text;
+
+    button.addEventListener("click", () => {
+      affection += choice.affection || 0;
+
+      currentIndex++;
+      showStep();
+    });
+
+    choicesElement.appendChild(button);
+  });
+}
+
+function nextStep() {
+  currentIndex++;
+  showStep();
+}
+
+function showEnd() {
+  nameElement.textContent = "GAME END";
+  textElement.textContent =
+    "今回の好感度：" + affection + "\n\nゲームをプレイしてくれてありがとう！";
+
+  choicesElement.innerHTML = "";
+  nextButton.textContent = "最初から";
+  nextButton.style.display = "block";
+  nextButton.onclick = restartGame;
+}
+
+function restartGame() {
+  currentIndex = 0;
+  affection = 0;
+  showStep();
+}
+
+// ゲーム開始
+showStep();
