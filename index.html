@@ -84,6 +84,24 @@ body {
     cursor: pointer;
     transition: left 0.15s, top 0.15s;
 }
+    #dialogue {
+    display: none;
+
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+
+    background: white;
+    color: black;
+    padding: 20px 40px;
+    border: 3px solid black;
+    border-radius: 15px;
+
+    font-size: 20px;
+    min-width: 200px;
+    text-align: center;
+}
 </style>
 </head>
 
@@ -99,6 +117,9 @@ body {
 <!-- ゲーム画面 -->
 <div id="gameScreen">
     <img src="images/image.png" id="escapeImage">
+        <div id="dialogue">
+        こんにちは！
+    </div>
 </div>
 
 <script>
@@ -130,6 +151,12 @@ function escape() {
 }
 
 img.addEventListener("mouseenter", escape);
+
+    const dialogues = [
+        "発挑考…見調振♡"
+        "お前の殻を…破ってやる♡"
+    "最近遅刻が多いんじゃない？"
+    "規律ある自由…感じて？"
 
 </script>
 
