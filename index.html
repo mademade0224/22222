@@ -183,6 +183,8 @@ const dialogues = [
     "規律ある自由…感じて？"
 ];
 
+let gamestarted = false;
+    
 // クリックしたらセリフ表示
 img.addEventListener("click", function() {
 
@@ -192,6 +194,16 @@ img.addEventListener("click", function() {
 
     dialogue.textContent = dialogues[random];
     dialogue.style.display = "block";
+
+    if (!gamestarted) {
+        gamestarted = true;
+
+        console.log("乙女ゲーム")
+
+        setTimeout(function() {
+            window.location.href = "otome/index.html"
+        }, 5000);
+    }
 
 });
 
