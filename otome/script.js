@@ -17,6 +17,15 @@ function showStep() {
   if (step.bg) {
     bgElement.src = step.bg;
   }
+
+  if (step.chara !== undefined) {
+    if (step.chara) {
+      charaElement.src = step.chara;
+      charaElement.style.display = "block"; // 表示する
+    } else {
+      charaElement.style.display = "none";  // 画像がない場合は非表示にする
+    }
+  }
   // ストーリーが最後まで進んだ場合
   if (!step) {
     showEnd();
