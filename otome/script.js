@@ -9,7 +9,9 @@ const textElement = document.getElementById("text");
 const choicesElement = document.getElementById("choices");
 const nextButton = document.getElementById("next-button");
 const bgElement = document.getElementById("background");
-const charaElement = document.getElementById("character"); // ← 追加
+const bgElement = document.getElementById("background2");
+const charaElement = document.getElementById("character"); 
+const charaElement = document.getElementById("character2");// ← 追加
 
 function showStep() {
   const step = story[currentIndex];
