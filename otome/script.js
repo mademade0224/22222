@@ -85,7 +85,7 @@ function nextStep() {
 function showEnd() {
   nameElement.textContent = "GAME END";
   textElement.textContent =
-    "今回の好感度：" + affection + "\n\nゲームをプレイしてくれてありがとう！";
+    "今回の好感度：" + affection + "\n\nおしまい";
 
   choicesElement.innerHTML = "";
   nextButton.textContent = "最初から";
