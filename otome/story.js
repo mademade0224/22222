@@ -34,15 +34,27 @@ const story = [
     name: "？？？",
     text: "あとで校長室へ来なさい"
   },
-  {
+    {
     type: "dialogue",
     name: "？？？",
-    text: "待っているから"
+    chara: null,
+    text: "では👋"
   },
+    {
+    type: "dialogue",
+    name: "YOU",
+    text: "(なんだったのだろうか…？)"
+  },
+  {
+    type: "dialogue",
+    name: "YOU",
+    text: "（生活指導である。校長室へ向かわねば。）"
+  },
+  
   {
     type: "ending",
     name: "END",
-    text: "では👋"
+    text: "つづく"
   }
 ];
 
