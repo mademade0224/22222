@@ -50,6 +50,13 @@ const story = [
     name: "YOU",
     text: "（生活指導である。校長室へ向かわねば。）"
   },
+  {
+  type: "dialogue",
+    name: "？？？",
+    bg: "images/background2.jpg",
+    chara: "images/character2.png",
+    text: "やあ"
+  },
   
   {
     type: "ending",
