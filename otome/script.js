@@ -2,6 +2,7 @@
 
 let currentIndex = 0;
 let affection = 0;
+let fadeTimer = null;
 
 const nameElement = document.getElementById("name");
 const textElement = document.getElementById("text");
@@ -13,17 +14,32 @@ const charaElement = document.getElementById("character"); // ← 追加
 function showStep() {
   const step = story[currentIndex];
 
+  if (!step) {
+    showEnd();
+    return;
+  }
+
   // ← 追加：stepにbgが指定されていたら画像を切り替える
   if (step.bg) {
     bgElement.src = step.bg;
   }
 
   if (step.chara !== undefined) {
+    clearTimeout(fadeTimer);
+    
     if (step.chara) {
       charaElement.src = step.chara;
-      charaElement.style.display = "block"; // 表示する
+      charaElement.style.display = "block";// 表示する
+      requestAnimationFrame(() => {
+        charaElement.classList.remove("is-hidden");
+      });
     } else {
+      charaElement.classList.add("is-hidden");
+      fadeTimer = setTimeout(() => {
+        if (charaElement.classList.contains("is-hidden")) {
       charaElement.style.display = "none";  // 画像がない場合は非表示にする
+        }
+      }, 600);
     }
   }
   // ストーリーが最後まで進んだ場合
