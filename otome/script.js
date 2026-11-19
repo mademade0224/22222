@@ -107,7 +107,7 @@ function showEnd() {
   nextButton.textContent = "最初から";
   nextButton.style.display = "block";
 nextButton.onclick = () => {
-  window.location.href = "./index.html";
+  window.location.href = "../index.html";
 };
 }
 
