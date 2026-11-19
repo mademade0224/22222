@@ -63,7 +63,7 @@ function showStep() {
 
   // エンディングの場合
   if (step.type === "ending") {
-    nextButton.textContent = "タイトルへ";
+    nextButton.textContent = "今日の結果を見る";
     nextButton.style.display = "block";
     nextButton.onclick = showEnd;
     return;
@@ -106,7 +106,9 @@ function showEnd() {
   choicesElement.innerHTML = "";
   nextButton.textContent = "最初から";
   nextButton.style.display = "block";
-  nextButton.onclick = restartGame;
+nextButton.onclick = () => {
+  window.location.href = "./index.html";
+};
 }
 
 function restartGame() {
