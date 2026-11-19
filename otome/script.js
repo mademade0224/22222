@@ -7,6 +7,8 @@ const nameElement = document.getElementById("name");
 const textElement = document.getElementById("text");
 const choicesElement = document.getElementById("choices");
 const nextButton = document.getElementById("next-button");
+const bgElement = document.getElementById("background");
+const charaElement = document.getElementById("character"); // ← 追加
 
 function showStep() {
   const step = story[currentIndex];
