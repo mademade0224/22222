@@ -3,6 +3,7 @@ const story = [
   {
     type: "dialogue",
     bg: "background.jpg",
+    chara: "character.png",
     name: "？？？",
     text: "……あれ。君、見かけない顔だね。"
   },
