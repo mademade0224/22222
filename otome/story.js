@@ -5,26 +5,26 @@ const story = [
     bg: "background.jpg",
     chara: "character.png",
     name: "？？？",
-    text: "……あれ。君、見かけない顔だね。"
+    text: "…最近遅刻が多いんじゃない"
   },
   {
     type: "dialogue",
     name: "？？？",
-    text: "ここで何をしているの？"
+    text: "あみじすか、覚えてる？"
   },
   {
     type: "choice",
     choices: [
       {
-        text: "君に会いに来たんだ。",
+        text: "もちろん",
         affection: 10
       },
       {
-        text: "ちょっと迷子になって。",
+        text: "....。",
         affection: 5
       },
       {
-        text: "別に、何でもない。",
+        text: "覚えてない",
         affection: -5
       }
     ]
@@ -32,17 +32,17 @@ const story = [
   {
     type: "dialogue",
     name: "？？？",
-    text: "ふうん……。なんだか面白い人だね。"
+    text: "あとで校長室へ来なさい"
   },
   {
     type: "dialogue",
     name: "？？？",
-    text: "また会えるといいな。"
+    text: "待っているから"
   },
   {
     type: "ending",
     name: "END",
-    text: "これで今日のお話はおしまい。"
+    text: "では👋"
   }
 ];
 
