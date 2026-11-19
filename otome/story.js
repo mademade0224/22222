@@ -2,8 +2,8 @@
 const story = [
   {
     type: "dialogue",
-    bg: "background.jpg",
-    chara: "character.png",
+    bg: "images/background.jpg",
+    chara: "images/character.png",
     name: "？？？",
     text: "…最近遅刻が多いんじゃない"
   },
