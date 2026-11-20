@@ -131,5 +131,18 @@ body {
   #text {
     line-height: 1.5;
   }
+  #bg-fade {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+  z-index: 1; /* #background(0)より上、#message-box(2)より下 */
+}
+
+#bg-fade.is-active {
+  opacity: 1;
+}
 }
 
