@@ -1,5 +1,8 @@
 let currentIndex = 0;
-let affection = 0;
+let affections = {
+  masato: 0,
+  noshiro: 0
+};
 let fadeTimer = null;
 let bgFadeTimer = null;
 
@@ -162,7 +165,10 @@ function restartGame() {
   clearTimeout(fadeTimer);
   clearTimeout(bgFadeTimer);
   currentIndex = 0;
-  affection = 0;
+  affections = {
+    masato: 0,
+    noshiro: 0
+  };
   showStep();
 }
 
