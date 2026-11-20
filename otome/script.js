@@ -111,7 +111,9 @@ function showChoices(choices) {
     button.textContent = choice.text;
 
     button.addEventListener("click", () => {
-      affection += choice.affection || 0;
+      if (choice.target && affections[choice.target] !== undefined) {
+        affections[choice.target] += choice.affection || 0;
+      }
       if (choice.replyText) {
         choicesElement.innerHTML = "";
         nameElement.textContent = choice.replyName || "";
