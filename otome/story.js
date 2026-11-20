@@ -71,7 +71,7 @@ const story = [
     type: "choice",
     choices: [
       {
-        text: "きゃあっ！",
+        text: "きゃー！",
         target: "noshiro",
         affection: -10,
         replyName: "？？？",
