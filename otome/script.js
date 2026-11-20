@@ -223,7 +223,7 @@ function restartGame() {
 
 function startGameWithPlayerName() {
   const input = playerNameInput ? playerNameInput.value.trim() : "";
-  playerName = input || "YOU";
+  playerName = input || "小林正子";
   if (nameInputScreen) {
     nameInputScreen.style.display = "none";
   }
