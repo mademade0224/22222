@@ -151,7 +151,9 @@ function nextStep() {
 function showEnd() {
   nameElement.textContent = "GAME END";
   textElement.textContent =
-    "今回の好感度：" + affection + "\n\nおしまい";
+    "正人の好感度：" + affections.masato +
+    "\n能代ちゃんの好感度：" + affections.noshiro +
+    "\n\nおしまい";
 
   choicesElement.innerHTML = "";
   nextButton.textContent = "最初から";
