@@ -109,6 +109,28 @@ function showChoices(choices) {
 
     button.addEventListener("click", () => {
       affection += choice.affection || 0;
+      if (choice.replyText) {
+        choicesElement.innerHTML = "";
+        nameElement.textContent = choice.replyName || "";
+        textElement.textContent = choice.replyText;
+
+        if (choice.replyChara) {
+          clearTimeout(fadeTimer);
+          charaElement.src = choice.replyChara;
+          charaElement.style.display = "block";
+          requestAnimationFrame(() => {
+            charaElement.classList.remove("is-hidden");
+          });
+        }
+
+        nextButton.textContent = "次へ ▼";
+        nextButton.style.display = "block";
+        nextButton.onclick = () => {
+          currentIndex++;
+          showStep();
+        };
+        return;
+      }
 
       currentIndex++;
       showStep();
