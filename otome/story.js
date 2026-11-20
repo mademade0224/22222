@@ -1,9 +1,9 @@
-
 const story = [
   {
     type: "dialogue",
     bg: "images/background.jpg",
     chara: "images/character.png",
+    charaOwner: "正人",
     name: "？？？",
     text: "…最近遅刻が多いんじゃない"
   },
@@ -43,13 +43,13 @@ const story = [
     name: "？？？",
     text: "あとで校長室へ来なさい"
   },
-    {
+  {
     type: "dialogue",
     name: "？？？",
     chara: null,
     text: "では👋"
   },
-    {
+  {
     type: "dialogue",
     name: "YOU",
     text: "(なんだったのだろうか…？)"
@@ -60,14 +60,14 @@ const story = [
     text: "（生活指導である。校長室へ向かわねば。）"
   },
   {
-  type: "dialogue",
+    type: "dialogue",
     name: "？？？",
     bg: "images/background2.jpg",
     chara: "images/character2.png",
-    charaOwner: "？？？",
+    charaOwner: "ノシロ",
     text: "やあ"
   },
-    {
+  {
     type: "choice",
     choices: [
       {
@@ -98,11 +98,9 @@ const story = [
     name: "YOU",
     text: "よろしくね。ノシロくん。"
   },
-  
   {
     type: "ending",
     name: "END",
     text: "つづく"
   }
 ];
-
