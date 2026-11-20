@@ -6,6 +6,7 @@ let affections = {
 let fadeTimer = null;
 let bgFadeTimer = null;
 let currentCharaOwner = "";
+let playerName = "YOU";
 
 const nameElement = document.getElementById("name");
 const textElement = document.getElementById("text");
@@ -14,6 +15,10 @@ const nextButton = document.getElementById("next-button");
 const bgElement = document.getElementById("background");
 const bgFadeElement = document.getElementById("bg-fade");
 const charaElement = document.getElementById("character");
+
+const nameInputScreen = document.getElementById("name-input-screen");
+const playerNameInput = document.getElementById("player-name-input");
+const startGameButton = document.getElementById("start-game-button");
 
 function formatText(str) {
   if (!str) return "";
@@ -215,5 +220,28 @@ function restartGame() {
   showStep();
 }
 
-// ゲーム開始
-showStep();
+function startGameWithPlayerName() {
+  const input = playerNameInput ? playerNameInput.value.trim() : "";
+  playerName = input || "YOU";
+  if (nameInputScreen) {
+    nameInputScreen.style.display = "none";
+  }
+  showStep();
+}
+
+// 名前決定ボタンとEnterキーでゲーム開始
+if (startGameButton) {
+  startGameButton.addEventListener("click", startGameWithPlayerName);
+}
+if (playerNameInput) {
+  playerNameInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      startGameWithPlayerName();
+    }
+  });
+}
+
+// 名前入力画面がない場合はそのまま開始
+if (!nameInputScreen) {
+  showStep();
+}
