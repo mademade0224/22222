@@ -4,7 +4,7 @@ const story = [
     bg: "images/background.jpg",
     chara: null,
     name: "YOU",
-    text: "私は三鷹中等教育学校☆年生、｛name｝！いけない、また遅刻だわ！"
+    text: "私は三鷹中等教育学校☆年生、{name}！いけない、また遅刻だわ！"
   },
   {
     type: "dialogue",
