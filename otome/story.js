@@ -57,6 +57,32 @@ const story = [
     chara: "images/character2.png",
     text: "やあ"
   },
+    {
+    type: "choice",
+    choices: [
+      {
+        text: "きゃあっ！",
+        replyName: "？？？",
+        replyChara: "images/character.png",
+        replyText: "失礼だなー。ノシロだよ。"
+      },
+      {
+        text: "誰？",
+        replyName: "？？？",
+        replyText: "ノシロだよ。よろしく。"
+      },
+      {
+        text: "こんにちは！",
+        replyName: "？？？",
+        replyText: "UNIX研究同好会のノシロだよ。よろしくね！"
+      }
+    ]
+  },
+  {
+    type: "dialogue",
+    name: "YOU",
+    text: "よろしくね。ノシロくん。"
+  },
   
   {
     type: "ending",
