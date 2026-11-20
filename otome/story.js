@@ -74,7 +74,6 @@ const story = [
         target: "noshiro",
         affection: -10,
         replyName: "？？？",
-        replyChara: "images/character.png",
         replyText: "失礼だなー。ノシロだよ。"
       },
       {
