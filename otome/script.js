@@ -360,6 +360,12 @@ document.addEventListener("keydown", (e) => {
     // 名前入力画面が開いている間は対象外にする
     if (nameInputScreen && nameInputScreen.style.display !== "none") return;
 
+    // 文字送り中ならスキップして全文表示
+    if (typeof isTyping !== "undefined" && isTyping) {
+      e.preventDefault();
+      finishTyping();
+      return;
+    }
     // 進行ボタン（「次へ ▼」など）が表示されているときだけクリックを実行
     if (nextButton && nextButton.style.display !== "none") {
       e.preventDefault(); // フォーカス中のボタンが二重クリックされるのを防ぐ
