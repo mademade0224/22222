@@ -86,6 +86,7 @@ body {
   border: 2px solid #d9c7e8;
   border-radius: 8px;
   z-index: 10;
+  cursor: pointer;
 }
 
 #name {
