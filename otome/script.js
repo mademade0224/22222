@@ -1,17 +1,44 @@
-
-
 let currentIndex = 0;
 let affection = 0;
 let fadeTimer = null;
+let bgFadeTimer = null;
 
 const nameElement = document.getElementById("name");
 const textElement = document.getElementById("text");
 const choicesElement = document.getElementById("choices");
 const nextButton = document.getElementById("next-button");
 const bgElement = document.getElementById("background");
-const bgElement2 = document.getElementById("background2");
-const charaElement = document.getElementById("character"); 
-const charaElement2 = document.getElementById("character2");// ← 追加
+const bgFadeElement = document.getElementById("bg-fade");
+const charaElement = document.getElementById("character");
+
+function changeBackground(nextBg) {
+  if (!nextBg) return;
+
+  clearTimeout(bgFadeTimer);
+
+  // 初回表示または同じ背景なら暗転せず切り替え
+  const currentBg = bgElement.getAttribute("src");
+  if (!currentBg) {
+    bgElement.src = nextBg;
+    return;
+  }
+  if (currentBg === nextBg) {
+    return;
+  }
+
+  // 暗転要素がない場合はそのまま切り替える
+  if (!bgFadeElement) {
+    bgElement.src = nextBg;
+    return;
+  }
+
+  // すぅっと暗転 → 350ms後に画像を差し替えてすぅっと明転
+  bgFadeElement.classList.add("is-active");
+  bgFadeTimer = setTimeout(() => {
+    bgElement.src = nextBg;
+    bgFadeElement.classList.remove("is-active");
+  }, 350);
+}
 
 function showStep() {
   const step = story[currentIndex];
@@ -21,17 +48,18 @@ function showStep() {
     return;
   }
 
-  // ← 追加：stepにbgが指定されていたら画像を切り替える
+  // 背景の切り替え（暗転演出付き）
   if (step.bg) {
-    bgElement.src = step.bg;
+    changeBackground(step.bg);
   }
 
+  // キャラクター画像の表示・フェードアウト制御
   if (step.chara !== undefined) {
     clearTimeout(fadeTimer);
-    
+
     if (step.chara) {
       charaElement.src = step.chara;
-      charaElement.style.display = "block";// 表示する
+      charaElement.style.display = "block";
       requestAnimationFrame(() => {
         charaElement.classList.remove("is-hidden");
       });
@@ -39,15 +67,10 @@ function showStep() {
       charaElement.classList.add("is-hidden");
       fadeTimer = setTimeout(() => {
         if (charaElement.classList.contains("is-hidden")) {
-      charaElement.style.display = "none";  // 画像がない場合は非表示にする
+          charaElement.style.display = "none";
         }
       }, 600);
     }
-  }
-  // ストーリーが最後まで進んだ場合
-  if (!step) {
-    showEnd();
-    return;
   }
 
   // 表示をリセット
@@ -108,12 +131,14 @@ function showEnd() {
   choicesElement.innerHTML = "";
   nextButton.textContent = "最初から";
   nextButton.style.display = "block";
-nextButton.onclick = () => {
-  window.location.href = "../index.html";
-};
+  nextButton.onclick = () => {
+    window.location.href = "../index.html";
+  };
 }
 
 function restartGame() {
+  clearTimeout(fadeTimer);
+  clearTimeout(bgFadeTimer);
   currentIndex = 0;
   affection = 0;
   showStep();
