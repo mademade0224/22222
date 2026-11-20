@@ -71,17 +71,23 @@ const story = [
     choices: [
       {
         text: "きゃあっ！",
+        target: "noshiro",
+        affection: -10,
         replyName: "？？？",
         replyChara: "images/character.png",
         replyText: "失礼だなー。ノシロだよ。"
       },
       {
         text: "誰？",
+        target: "noshiro",
+        affection: 0,
         replyName: "？？？",
         replyText: "ノシロだよ。よろしく。"
       },
       {
         text: "こんにちは！",
+        target: "noshiro",
+        affection: 10,
         replyName: "？？？",
         replyText: "UNIX研究同好会のノシロだよ。よろしくね！"
       }
