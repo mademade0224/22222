@@ -57,7 +57,7 @@ const story = [
   {
     type: "dialogue",
     name: "YOU",
-    text: "（生活指導である。校長室へ向かわねば。）"
+    text: "（校長室へ向かわねば!）"
   },
   {
     type: "dialogue",
