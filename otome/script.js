@@ -22,7 +22,7 @@ const startGameButton = document.getElementById("start-game-button");
 
 function formatText(str) {
   if (!str) return "";
-  return str.replaceAll("{name}", playerName);
+  return String(str).replace(/\{\s*name\s*\}/g, playerName);
 }
 
 function updateCharacterBrightness(speakerName) {
@@ -35,8 +35,8 @@ function updateCharacterBrightness(speakerName) {
     return;
   }
 
-  // しゃべっている人が立ち絵のオーナー（charaOwner）と違うときは暗くする
-  if (speakerName !== currentCharaOwner) {
+  // 「？？？」または立ち絵の本人（currentCharaOwner）がしゃべっているときは明るくする
+  if (speakerName !== "？？？" && speakerName !== currentCharaOwner) {
     charaElement.classList.add("is-dim");
   } else {
     charaElement.classList.remove("is-dim");
@@ -114,7 +114,7 @@ function showStep() {
   nextButton.style.display = "none";
 
   nameElement.textContent = step.name || "";
-  textElement.textContent = step.text || "";
+  textElement.textContent = formatText(step.text);
   updateCharacterBrightness(step.name || "");
 
   // 選択肢の場合
@@ -142,7 +142,7 @@ function showChoices(choices) {
     const button = document.createElement("button");
 
     button.className = "choice-button";
-    button.textContent = choice.text;
+    button.textContent = formatText(choice.text);
 
     button.addEventListener("click", () => {
       if (choice.target && affections[choice.target] !== undefined) {
@@ -152,7 +152,7 @@ function showChoices(choices) {
       if (choice.replyText) {
         choicesElement.innerHTML = "";
         nameElement.textContent = choice.replyName || "";
-        textElement.textContent = choice.replyText;
+        textElement.textContent = formatText(choice.replyText);
 
         if (choice.replyChara) {
           clearTimeout(fadeTimer);
@@ -195,8 +195,9 @@ function nextStep() {
 function showEnd() {
   nameElement.textContent = "GAME END";
   textElement.textContent =
+    playerName + "の今回の結果\n\n" +
     "正人の好感度：" + affections.masato +
-    "\n能代ちゃんの好感度：" + affections.noshiro +
+    "\nノシロの好感度：" + affections.noshiro +
     "\n\nおしまい";
 
   choicesElement.innerHTML = "";
