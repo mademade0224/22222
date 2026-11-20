@@ -64,7 +64,7 @@ const story = [
     name: "？？？",
     bg: "images/background2.jpg",
     chara: "images/character2.png",
-    charaOwner: "ノシロ",
+    charaOwner: "？？？",
     text: "やあ"
   },
     {
