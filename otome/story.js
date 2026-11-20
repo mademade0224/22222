@@ -17,15 +17,24 @@ const story = [
     choices: [
       {
         text: "もちろん",
-        affection: 10
+        target: "masato",
+        affection: 10,
+        replyName: "？？？",
+        replyText: "えらいです"
       },
       {
         text: "....。",
-        affection: 5
+        target: "masato",
+        affection: 5,
+        replyName: "？？？",
+        replyText: "あいさつ身だしなみ時間を守るすぐやる感謝の気持ち"
       },
       {
         text: "覚えてない",
-        affection: -5
+        target: "masato",
+        affection: -5,
+        replyName: "？？？",
+        replyText: "凡事徹底がなってませんね"
       }
     ]
   },
