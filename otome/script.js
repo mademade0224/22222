@@ -15,6 +15,11 @@ const bgElement = document.getElementById("background");
 const bgFadeElement = document.getElementById("bg-fade");
 const charaElement = document.getElementById("character");
 
+function formatText(str) {
+  if (!str) return "";
+  return str.replaceAll("{name}", playerName);
+}
+
 function updateCharacterBrightness(speakerName) {
   const isVisible =
     charaElement.style.display !== "none" &&
