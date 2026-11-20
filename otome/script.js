@@ -5,6 +5,7 @@ let affections = {
 };
 let fadeTimer = null;
 let bgFadeTimer = null;
+let currentCharaOwner = "";
 
 const nameElement = document.getElementById("name");
 const textElement = document.getElementById("text");
@@ -13,6 +14,24 @@ const nextButton = document.getElementById("next-button");
 const bgElement = document.getElementById("background");
 const bgFadeElement = document.getElementById("bg-fade");
 const charaElement = document.getElementById("character");
+
+function updateCharacterBrightness(speakerName) {
+  const isVisible =
+    charaElement.style.display !== "none" &&
+    !charaElement.classList.contains("is-hidden");
+
+  if (!isVisible || !currentCharaOwner) {
+    charaElement.classList.remove("is-dim");
+    return;
+  }
+
+  // しゃべっている人が立ち絵のオーナー（charaOwner）と違うときは暗くする
+  if (speakerName !== currentCharaOwner) {
+    charaElement.classList.add("is-dim");
+  } else {
+    charaElement.classList.remove("is-dim");
+  }
+}
 
 function changeBackground(nextBg) {
   if (!nextBg) return;
@@ -61,12 +80,14 @@ function showStep() {
     clearTimeout(fadeTimer);
 
     if (step.chara) {
+      currentCharaOwner = step.charaOwner || "";
       charaElement.src = step.chara;
       charaElement.style.display = "block";
       requestAnimationFrame(() => {
         charaElement.classList.remove("is-hidden");
       });
     } else {
+      currentCharaOwner = "";
       charaElement.classList.add("is-hidden");
       fadeTimer = setTimeout(() => {
         if (charaElement.classList.contains("is-hidden")) {
@@ -74,6 +95,8 @@ function showStep() {
         }
       }, 600);
     }
+  } else if (step.charaOwner !== undefined) {
+    currentCharaOwner = step.charaOwner;
   }
 
   // 表示をリセット
@@ -82,6 +105,7 @@ function showStep() {
 
   nameElement.textContent = step.name || "";
   textElement.textContent = step.text || "";
+  updateCharacterBrightness(step.name || "");
 
   // 選択肢の場合
   if (step.type === "choice") {
@@ -114,6 +138,7 @@ function showChoices(choices) {
       if (choice.target && affections[choice.target] !== undefined) {
         affections[choice.target] += choice.affection || 0;
       }
+
       if (choice.replyText) {
         choicesElement.innerHTML = "";
         nameElement.textContent = choice.replyName || "";
@@ -121,12 +146,19 @@ function showChoices(choices) {
 
         if (choice.replyChara) {
           clearTimeout(fadeTimer);
+          if (choice.replyCharaOwner !== undefined) {
+            currentCharaOwner = choice.replyCharaOwner;
+          }
           charaElement.src = choice.replyChara;
           charaElement.style.display = "block";
           requestAnimationFrame(() => {
             charaElement.classList.remove("is-hidden");
           });
+        } else if (choice.replyCharaOwner !== undefined) {
+          currentCharaOwner = choice.replyCharaOwner;
         }
+
+        updateCharacterBrightness(choice.replyName || "");
 
         nextButton.textContent = "次へ ▼";
         nextButton.style.display = "block";
@@ -169,6 +201,8 @@ function restartGame() {
   clearTimeout(fadeTimer);
   clearTimeout(bgFadeTimer);
   currentIndex = 0;
+  currentCharaOwner = "";
+  charaElement.classList.remove("is-dim");
   affections = {
     masato: 0,
     noshiro: 0
