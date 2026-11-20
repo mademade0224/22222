@@ -347,3 +347,23 @@ if (playerNameInput) {
 if (!nameInputScreen) {
   showStep();
 }
+
+// Enterキーで「次へ ▼」（または表示中の進行ボタン）を押す
+document.addEventListener("keydown", (e) => {
+  // 日本語変換確定のEnter（isComposing）は無視する
+  if (e.isComposing) return;
+
+  if (e.key === "Enter") {
+    // 名前入力欄の入力中は対象外にする
+    if (document.activeElement === playerNameInput) return;
+
+    // 名前入力画面が開いている間は対象外にする
+    if (nameInputScreen && nameInputScreen.style.display !== "none") return;
+
+    // 進行ボタン（「次へ ▼」など）が表示されているときだけクリックを実行
+    if (nextButton && nextButton.style.display !== "none") {
+      e.preventDefault(); // フォーカス中のボタンが二重クリックされるのを防ぐ
+      nextButton.click();
+    }
+  }
+});
