@@ -154,3 +154,78 @@ body {
     line-height: 1.5;
   }
 }
+
+/* 右上の丸い？ボタン */
+#help-button {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid #d9c7e8;
+  background: rgba(15, 12, 25, 0.85);
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 15;
+}
+
+#help-button:hover {
+  background: #765c91;
+}
+
+/* 操作方法モーダル */
+#help-modal {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 12, 25, 0.78);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 25;
+}
+
+#help-modal.is-hidden {
+  display: none;
+}
+
+.help-modal-box {
+  width: min(85%, 360px);
+  padding: 22px;
+  background: #292535;
+  border: 2px solid #d9c7e8;
+  border-radius: 10px;
+  text-align: center;
+  color: white;
+}
+
+.help-modal-title {
+  margin: 0 0 12px;
+  font-size: 17px;
+  color: #e6d8f2;
+}
+
+.help-modal-text {
+  margin: 0 0 18px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+#close-help-button {
+  padding: 8px 22px;
+  color: white;
+  background: #765c91;
+  border: 1px solid #d9c7e8;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+#close-help-button:hover {
+  background: #987bb4;
+}
