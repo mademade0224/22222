@@ -16,7 +16,13 @@
       <img id="character" src="" alt="キャラクター" class="is-hidden" style="display: none;">
 
       <section id="message-box">
- <!-- 右上の操作方法ボタン -->
+        <div id="name"></div>
+        <div id="text"></div>
+        <div id="choices"></div>
+        <button id="next-button" type="button">次へ ▼</button>
+      </section>
+
+      <!-- 右上の操作方法ボタン -->
       <button id="help-button" type="button" aria-label="操作方法">？</button>
 
       <!-- 操作方法モーダル -->
@@ -27,18 +33,15 @@
           <button id="close-help-button" type="button">閉じる</button>
         </div>
       </div>
-        <div id="name-input-screen">
+
+      <!-- 名前入力画面 -->
+      <div id="name-input-screen">
         <div class="name-input-box">
           <p class="name-input-title">あなたの名前を教えてください</p>
           <input id="player-name-input" type="text" placeholder="例）正子" maxlength="10">
           <button id="start-game-button" type="button">けってい</button>
         </div>
       </div>
-
-        <div id="choices"></div>
-
-        <button id="next-button" type="button">次へ ▼</button>
-      </section>
     </div>
   </main>
 </body>
