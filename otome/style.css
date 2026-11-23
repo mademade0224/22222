@@ -99,6 +99,16 @@ body {
   font-weight: bold;
 }
 
+#name-input-screen {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 12, 25, 0.94);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
 #text {
   margin: 4px 0 14px;
   line-height: 1.8;
