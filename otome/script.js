@@ -27,10 +27,14 @@ const nameInputScreen = document.getElementById("name-input-screen");
 const playerNameInput = document.getElementById("player-name-input");
 const startGameButton = document.getElementById("start-game-button");
 
-// 文字列内の {name} だけを入力したプレイヤー名に変換する
+const helpButton = document.getElementById("help-button");
+const helpModal = document.getElementById("help-modal");
+const closeHelpButton = document.getElementById("close-help-button");
+
+// 文字列内の {name}（全角｛name｝も対応）を入力したプレイヤー名に変換する
 function formatText(str) {
   if (!str) return "";
-  return str.replaceAll("{name}", playerName);
+  return String(str).replace(/[｛{]\s*name\s*[｝}]/g, playerName);
 }
 
 // 1文字ずつ表示を開始する
@@ -101,6 +105,29 @@ nextButton.addEventListener("click", (e) => {
 choicesElement.addEventListener("click", (e) => {
   e.stopPropagation();
 });
+
+// 操作方法モーダルの開閉
+if (helpButton && helpModal) {
+  helpButton.addEventListener("click", (e) => {
+    e.stopPropagation();
+    helpModal.classList.remove("is-hidden");
+  });
+}
+
+if (closeHelpButton && helpModal) {
+  closeHelpButton.addEventListener("click", (e) => {
+    e.stopPropagation();
+    helpModal.classList.add("is-hidden");
+  });
+}
+
+if (helpModal) {
+  helpModal.addEventListener("click", (e) => {
+    if (e.target === helpModal) {
+      helpModal.classList.add("is-hidden");
+    }
+  });
+}
 
 function updateCharacterBrightness(speakerName) {
   const isVisible =
@@ -354,6 +381,13 @@ document.addEventListener("keydown", (e) => {
   if (e.isComposing) return;
 
   if (e.key === "Enter") {
+    // 操作方法モーダルが開いているときはEnterでモーダルを閉じてストーリーは進めない
+    if (helpModal && !helpModal.classList.contains("is-hidden")) {
+      e.preventDefault();
+      helpModal.classList.add("is-hidden");
+      return;
+    }
+
     // 名前入力欄の入力中は対象外にする
     if (document.activeElement === playerNameInput) return;
 
@@ -366,6 +400,7 @@ document.addEventListener("keydown", (e) => {
       finishTyping();
       return;
     }
+
     // 進行ボタン（「次へ ▼」など）が表示されているときだけクリックを実行
     if (nextButton && nextButton.style.display !== "none") {
       e.preventDefault(); // フォーカス中のボタンが二重クリックされるのを防ぐ
