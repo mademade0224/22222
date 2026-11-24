@@ -513,7 +513,7 @@ typingInputElement.addEventListener("input", () => {
           finishTypingMiniGame();
         }
       } else if (typingStatusElement) {
-        typingStatusElement.textContent = "ちがうみたい！もう一度入力してみて";
+        typingStatusElement.textContent = "not good";
       }
     }
 });
