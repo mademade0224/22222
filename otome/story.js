@@ -102,7 +102,44 @@ const story = [
   {
     type: "dialogue",
     name: "YOU",
-    text: "よろしくね。ノシロくん。"
+    text: "よろしくね。ところで、校長室はどこ？"
+  },
+  {
+    type: "dialogue",
+    name: "ノシロ",
+    charaOwner: "ノシロ",
+    text: "南棟二階だよ。でも、そんなところより僕と第一call室でタイピングをしないかい？"
+  },
+   {
+    type: "choice",
+    choices: [
+      {
+        text: "いいよ。",
+        target: "noshiro",
+        affection: 10,
+        replyName: "ノシロ",
+        replyText: "いえーい",
+        nextId: "route_a_1"
+      },
+      {
+        text: "いやだね",
+        target: "noshiro",
+        affection: 0,
+        replyName: "ノシロ",
+        replyText: "マサトめー",
+        nextId: "route_skip_1"
+      },
+    ]
+  },
+  {
+    id: "route_a_1",
+    name: "ノシロ",
+    text: "第一callしつだよ。"
+  },
+  {
+    id: "route_skip_1",
+    name: "ノシロ",
+    text: "覚えてろよー"
   },
   {
     type: "ending",
