@@ -6,6 +6,7 @@ let affections = {
 let fadeTimer = null;
 let bgFadeTimer = null;
 let typeTimer = null;
+let pcCloseTimer = null;
 let currentCharaOwner = "";
 let playerName = "YOU";
 
@@ -37,7 +38,7 @@ const helpButton = document.getElementById("help-button");
 const helpModal = document.getElementById("help-modal");
 const closeHelpButton = document.getElementById("close-help-button");
 
-const typingAreaElement = document.getElementById("typing-area");
+const pcWindowElement = document.getElementById("pc-window");
 const typingTargetElement = document.getElementById("typing-target");
 const typingInputElement = document.getElementById("typing-input");
 const typingStatusElement = document.getElementById("typing-status");
@@ -246,9 +247,6 @@ function showStep() {
   onTypingComplete = null;
   choicesElement.innerHTML = "";
   nextButton.style.display = "none";
-  if (typingAreaElement) {
-    typingAreaElement.style.display = "none";
-  }
 
   nameElement.textContent = step.name || "";
   textElement.textContent = "";
@@ -256,7 +254,7 @@ function showStep() {
 
   const formattedText = formatText(step.text);
 
-  // タイピングゲームの場合：文字送り完了後にタイピング欄を表示
+  // タイピングゲームの場合：文字送り完了後にPC画面をぴゅっと開く
   if (step.type === "typing") {
     typeText(formattedText, () => {
       startTypingMiniGame(step);
@@ -372,9 +370,14 @@ function showEnd() {
 function restartGame() {
   clearTimeout(fadeTimer);
   clearTimeout(bgFadeTimer);
+  clearTimeout(pcCloseTimer);
   clearInterval(typeTimer);
   isTyping = false;
+  isTypingGame = false;
   onTypingComplete = null;
+  if (pcWindowElement) {
+    pcWindowElement.classList.add("is-hidden");
+  }
   currentIndex = 0;
   currentCharaOwner = "";
   charaElement.classList.remove("is-dim");
@@ -411,8 +414,9 @@ if (!nameInputScreen) {
   showStep();
 }
 
-// --- タイピングミニゲーム処理 ---
+// --- PCタイピングミニゲーム処理 ---
 function startTypingMiniGame(step) {
+  clearTimeout(pcCloseTimer);
   isTypingGame = true;
   typingWords = Array.isArray(step.words) && step.words.length > 0
     ? [...step.words]
@@ -423,8 +427,11 @@ function startTypingMiniGame(step) {
   nextButton.style.display = "none";
   choicesElement.innerHTML = "";
 
-  if (typingAreaElement) {
-    typingAreaElement.style.display = "block";
+  if (pcWindowElement) {
+    pcWindowElement.setAttribute("aria-hidden", "false");
+    requestAnimationFrame(() => {
+      pcWindowElement.classList.remove("is-hidden");
+    });
   }
 
   setupTypingQuestion();
@@ -440,20 +447,33 @@ function setupTypingQuestion() {
   }
   if (typingInputElement) {
     typingInputElement.value = "";
-    typingInputElement.focus();
+    setTimeout(() => {
+      typingInputElement.focus();
+    }, 60);
   }
 }
 
 function finishTypingMiniGame() {
   isTypingGame = false;
-  if (typingAreaElement) {
-    typingAreaElement.style.display = "none";
-  }
   if (typingInputElement) {
     typingInputElement.value = "";
   }
+  if (typingStatusElement) {
+    typingStatusElement.textContent = "COMPLETE!";
+  }
 
-  goToNextStep({ nextId: typingNextId });
+  const nextTargetId = typingNextId;
+  typingNextId = null;
+
+  if (pcWindowElement) {
+    pcWindowElement.classList.add("is-hidden");
+    pcWindowElement.setAttribute("aria-hidden", "true");
+    pcCloseTimer = setTimeout(() => {
+      goToNextStep({ nextId: nextTargetId });
+    }, 240);
+  } else {
+    goToNextStep({ nextId: nextTargetId });
+  }
 }
 
 if (typingInputElement) {
@@ -462,7 +482,6 @@ if (typingInputElement) {
     const targetWord = typingWords[typingWordIndex] || "";
     const typed = typingInputElement.value;
 
-    // 完全一致したら次の問題へ（またはクリア）
     if (typed === targetWord) {
       typingWordIndex++;
       if (typingWordIndex < typingWords.length) {
@@ -477,7 +496,6 @@ if (typingInputElement) {
     if (e.isComposing) return;
     if (!isTypingGame) return;
 
-    // クリック防止のため親への伝播を止める
     e.stopPropagation();
 
     if (e.key === "Enter") {
@@ -499,36 +517,27 @@ if (typingInputElement) {
 
 // Enterキーで「次へ ▼」（または表示中の進行ボタン）を押す
 document.addEventListener("keydown", (e) => {
-  // 日本語変換確定のEnter（isComposing）は無視する
   if (e.isComposing) return;
-
-  // タイピングミニゲーム中はEnterでストーリーを進めない
   if (isTypingGame) return;
 
   if (e.key === "Enter") {
-    // 操作方法モーダルが開いているときはEnterでモーダルを閉じてストーリーは進めない
     if (helpModal && !helpModal.classList.contains("is-hidden")) {
       e.preventDefault();
       helpModal.classList.add("is-hidden");
       return;
     }
 
-    // 名前入力欄の入力中は対象外にする
     if (document.activeElement === playerNameInput) return;
-
-    // 名前入力画面が開いている間は対象外にする
     if (nameInputScreen && nameInputScreen.style.display !== "none") return;
 
-    // 文字送り中ならスキップして全文表示
     if (typeof isTyping !== "undefined" && isTyping) {
       e.preventDefault();
       finishTyping();
       return;
     }
 
-    // 進行ボタン（「次へ ▼」など）が表示されているときだけクリックを実行
     if (nextButton && nextButton.style.display !== "none") {
-      e.preventDefault(); // フォーカス中のボタンが二重クリックされるのを防ぐ
+      e.preventDefault();
       nextButton.click();
     }
   }
