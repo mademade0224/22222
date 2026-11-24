@@ -239,6 +239,35 @@ body {
   font-size: 14px;
 }
 
+#typing-area {
+  margin-top: 12px;
+}
+
+#typing-target {
+  font-size: 20px;
+  font-weight: bold;
+  letter-spacing: 0.08em;
+  color: #e6d8f2;
+  margin-bottom: 8px;
+}
+
+#typing-input {
+  width: 100%;
+  max-width: 320px;
+  padding: 8px 12px;
+  font-size: 16px;
+  color: #ffffff;
+  background: #17151d;
+  border: 1px solid #d9c7e8;
+  border-radius: 6px;
+}
+
+#typing-status {
+  margin-top: 6px;
+  font-size: 13px;
+  color: #cfc3dc;
+}
+
 #close-help-button:hover {
   background: #987bb4;
 }
