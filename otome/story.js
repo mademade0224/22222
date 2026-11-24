@@ -136,7 +136,15 @@ const story = [
     name: "ノシロ",
     text: "第一callしつだよ。"
   },
-   {
+  {
+    id: "typing_a",
+    type: "typing",
+    name: "ノシロ",
+    text: "合言葉を入力してね！",
+    words: ["call", "noshiro", "start"], // 出題リスト（1問だけでもOK）
+    nextId: "route_a_10" // クリアしたら route_a_10 へ進む
+  },
+  {
     id: "route_a_10",
     name: "ノシロ",
     text: "そろそろHRに行こうか。",
