@@ -479,10 +479,10 @@ function finishTypingMiniGame() {
   }
 }
 
-if (typingInputElement) {
-  typingInputElement.addEventListener("input", () => {
+typingInputElement.addEventListener("input", () => {
     if (!isTypingGame) return;
-    const targetWord = typingWords[typingWordIndex] || "";
+    const item = typingWords[typingWordIndex];
+    const targetWord = typeof item === "object" && item !== null ? item.roma : (item || "");
     const typed = typingInputElement.value;
 
     if (typed === targetWord) {
