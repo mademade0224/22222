@@ -141,9 +141,12 @@ const story = [
     type: "typing",
     name: "ノシロ",
     text: "タイピングスタートだよ！",
-    words: [{ jp: "発調考見挑振", roma: "hattyoukoukenntyoushinn" },
-      { jp: "小林正人", roma: "kobayashimasato" },
-      { jp: "あみじすか", roma: "amijisuka" }], // 出題リスト（1問だけでもOK）
+    words: [{ jdisplay: "発調考見挑振",
+        answers: ["hattyoukoukenntyoushinn", "hattyoukoukenntyousinn", "はっちょうこうけんちょうしん"]},
+      { jdisplay: "あみじすか",
+        answers: ["あみじすか","amijisuka"]},
+      { jdisplay: "規律ある自由",
+        answers: ["kiritsuarujiyuu", "kirituarujiyuu", "きりつあるじゆう"]], // 出題リスト（1問だけでもOK）
     nextId: "route_a_10" // クリアしたら route_a_10 へ進む
   },
   {
