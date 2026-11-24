@@ -133,8 +133,9 @@ const story = [
   },
   {
     id: "route_a_1",
+    bg: "images/background3.jpg",
     name: "ノシロ",
-    text: "第一callしつだよ。"
+    text: "ここが第一call室だよ。"
   },
   {
     id: "typing_a",
@@ -154,7 +155,7 @@ const story = [
         display: "規律ある自由",
         answers: ["kiritsuarujiyuu", "kirituarujiyuu", "きりつあるじゆう"]
       }
-    ], // ← ここに配列を閉じる ] と , が必要！
+    ], 
     nextId: "route_a_10" // クリアしたら route_a_10 へ進む
   },
   {
@@ -177,7 +178,7 @@ const story = [
   {
     id: "after_choice",
     name: "YOU",
-    text: "ああ"
+    text: "ああああ"
   },
   {
     type: "ending",
