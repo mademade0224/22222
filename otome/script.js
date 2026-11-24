@@ -482,3 +482,4 @@ function setupTypingQuestion() {
   if (typingInputElement) {
     typingInputElement.value = "";
   }
+}
