@@ -14,6 +14,7 @@ let isTyping = false;
 let currentFullText = "";
 let onTypingComplete = null;
 
+// タイピングミニゲーム状態管理
 let isTypingGame = false;
 let typingWords = [];
 let typingWordIndex = 0;
@@ -245,12 +246,23 @@ function showStep() {
   onTypingComplete = null;
   choicesElement.innerHTML = "";
   nextButton.style.display = "none";
+  if (typingAreaElement) {
+    typingAreaElement.style.display = "none";
+  }
 
   nameElement.textContent = step.name || "";
   textElement.textContent = "";
   updateCharacterBrightness(step.name || "");
 
   const formattedText = formatText(step.text);
+
+  // タイピングゲームの場合：文字送り完了後にタイピング欄を表示
+  if (step.type === "typing") {
+    typeText(formattedText, () => {
+      startTypingMiniGame(step);
+    });
+    return;
+  }
 
   // 選択肢の場合：文字送り完了後に選択肢を表示
   if (step.type === "choice") {
@@ -399,39 +411,8 @@ if (!nameInputScreen) {
   showStep();
 }
 
-// Enterキーで「次へ ▼」（または表示中の進行ボタン）を押す
-document.addEventListener("keydown", (e) => {
-  // 日本語変換確定のEnter（isComposing）は無視する
-  if (e.isComposing) return;
-
-  if (e.key === "Enter") {
-    // 操作方法モーダルが開いているときはEnterでモーダルを閉じてストーリーは進めない
-    if (helpModal && !helpModal.classList.contains("is-hidden")) {
-      e.preventDefault();
-      helpModal.classList.add("is-hidden");
-      return;
-    }
-
-    // 名前入力欄の入力中は対象外にする
-    if (document.activeElement === playerNameInput) return;
-
-    // 名前入力画面が開いている間は対象外にする
-    if (nameInputScreen && nameInputScreen.style.display !== "none") return;
-
-    // 文字送り中ならスキップして全文表示
-    if (typeof isTyping !== "undefined" && isTyping) {
-      e.preventDefault();
-      finishTyping();
-      return;
-    }
-
-    // 進行ボタン（「次へ ▼」など）が表示されているときだけクリックを実行
-    if (nextButton && nextButton.style.display !== "none") {
-      e.preventDefault(); // フォーカス中のボタンが二重クリックされるのを防ぐ
-      nextButton.click();
-    }
-  }
-  function startTypingMiniGame(step) {
+// --- タイピングミニゲーム処理 ---
+function startTypingMiniGame(step) {
   isTypingGame = true;
   typingWords = Array.isArray(step.words) && step.words.length > 0
     ? [...step.words]
@@ -515,4 +496,40 @@ if (typingInputElement) {
     }
   });
 }
+
+// Enterキーで「次へ ▼」（または表示中の進行ボタン）を押す
+document.addEventListener("keydown", (e) => {
+  // 日本語変換確定のEnter（isComposing）は無視する
+  if (e.isComposing) return;
+
+  // タイピングミニゲーム中はEnterでストーリーを進めない
+  if (isTypingGame) return;
+
+  if (e.key === "Enter") {
+    // 操作方法モーダルが開いているときはEnterでモーダルを閉じてストーリーは進めない
+    if (helpModal && !helpModal.classList.contains("is-hidden")) {
+      e.preventDefault();
+      helpModal.classList.add("is-hidden");
+      return;
+    }
+
+    // 名前入力欄の入力中は対象外にする
+    if (document.activeElement === playerNameInput) return;
+
+    // 名前入力画面が開いている間は対象外にする
+    if (nameInputScreen && nameInputScreen.style.display !== "none") return;
+
+    // 文字送り中ならスキップして全文表示
+    if (typeof isTyping !== "undefined" && isTyping) {
+      e.preventDefault();
+      finishTyping();
+      return;
+    }
+
+    // 進行ボタン（「次へ ▼」など）が表示されているときだけクリックを実行
+    if (nextButton && nextButton.style.display !== "none") {
+      e.preventDefault(); // フォーカス中のボタンが二重クリックされるのを防ぐ
+      nextButton.click();
+    }
+  }
 });
