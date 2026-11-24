@@ -501,9 +501,10 @@ typingInputElement.addEventListener("input", () => {
 
     e.stopPropagation();
 
-    if (e.key === "Enter") {
+   if (e.key === "Enter") {
       e.preventDefault();
-      const targetWord = typingWords[typingWordIndex] || "";
+      const item = typingWords[typingWordIndex];
+      const targetWord = typeof item === "object" && item !== null ? item.roma : (item || "");
       if (typingInputElement.value.trim() === targetWord) {
         typingWordIndex++;
         if (typingWordIndex < typingWords.length) {
@@ -515,7 +516,6 @@ typingInputElement.addEventListener("input", () => {
         typingStatusElement.textContent = "ちがうみたい！もう一度入力してみて";
       }
     }
-  });
 }
 
 // Enterキーで「次へ ▼」（または表示中の進行ボタン）を押す
