@@ -136,10 +136,22 @@ const story = [
     name: "ノシロ",
     text: "第一callしつだよ。"
   },
+   {
+    id: "route_a_10",
+    name: "ノシロ",
+    text: "そろそろHRに行こうか。",
+    nextId: "after_choice"
+  },
   {
     id: "route_skip_1",
     name: "ノシロ",
-    text: "覚えてろよー"
+    text: "覚えてろよー",
+    nextId: "after_choice"
+  },
+  {
+    id: "after_choice",
+    name: "YOU",
+    text: "やばい！"
   },
   {
     type: "ending",
