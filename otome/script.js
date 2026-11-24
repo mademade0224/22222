@@ -516,8 +516,8 @@ typingInputElement.addEventListener("input", () => {
         typingStatusElement.textContent = "ちがうみたい！もう一度入力してみて";
       }
     }
-}
-
+});
+                                      
 // Enterキーで「次へ ▼」（または表示中の進行ボタン）を押す
 document.addEventListener("keydown", (e) => {
   if (e.isComposing) return;
