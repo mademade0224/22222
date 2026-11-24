@@ -14,6 +14,11 @@ let isTyping = false;
 let currentFullText = "";
 let onTypingComplete = null;
 
+let isTypingGame = false;
+let typingWords = [];
+let typingWordIndex = 0;
+let typingNextId = null;
+
 const nameElement = document.getElementById("name");
 const textElement = document.getElementById("text");
 const choicesElement = document.getElementById("choices");
@@ -30,6 +35,11 @@ const startGameButton = document.getElementById("start-game-button");
 const helpButton = document.getElementById("help-button");
 const helpModal = document.getElementById("help-modal");
 const closeHelpButton = document.getElementById("close-help-button");
+
+const typingAreaElement = document.getElementById("typing-area");
+const typingTargetElement = document.getElementById("typing-target");
+const typingInputElement = document.getElementById("typing-input");
+const typingStatusElement = document.getElementById("typing-status");
 
 // 文字列内の {name}（全角｛name｝も対応）を入力したプレイヤー名に変換する
 function formatText(str) {
@@ -421,4 +431,88 @@ document.addEventListener("keydown", (e) => {
       nextButton.click();
     }
   }
+  function startTypingMiniGame(step) {
+  isTypingGame = true;
+  typingWords = Array.isArray(step.words) && step.words.length > 0
+    ? [...step.words]
+    : ["call"];
+  typingWordIndex = 0;
+  typingNextId = step.nextId || null;
+
+  nextButton.style.display = "none";
+  choicesElement.innerHTML = "";
+
+  if (typingAreaElement) {
+    typingAreaElement.style.display = "block";
+  }
+
+  setupTypingQuestion();
+}
+
+function setupTypingQuestion() {
+  const currentWord = typingWords[typingWordIndex];
+  if (typingTargetElement) {
+    typingTargetElement.textContent = currentWord;
+  }
+  if (typingStatusElement) {
+    typingStatusElement.textContent = `問題 ${typingWordIndex + 1} / ${typingWords.length}`;
+  }
+  if (typingInputElement) {
+    typingInputElement.value = "";
+    typingInputElement.focus();
+  }
+}
+
+function finishTypingMiniGame() {
+  isTypingGame = false;
+  if (typingAreaElement) {
+    typingAreaElement.style.display = "none";
+  }
+  if (typingInputElement) {
+    typingInputElement.value = "";
+  }
+
+  goToNextStep({ nextId: typingNextId });
+}
+
+if (typingInputElement) {
+  typingInputElement.addEventListener("input", () => {
+    if (!isTypingGame) return;
+    const targetWord = typingWords[typingWordIndex] || "";
+    const typed = typingInputElement.value;
+
+    // 完全一致したら次の問題へ（またはクリア）
+    if (typed === targetWord) {
+      typingWordIndex++;
+      if (typingWordIndex < typingWords.length) {
+        setupTypingQuestion();
+      } else {
+        finishTypingMiniGame();
+      }
+    }
+  });
+
+  typingInputElement.addEventListener("keydown", (e) => {
+    if (e.isComposing) return;
+    if (!isTypingGame) return;
+
+    // クリック防止のため親への伝播を止める
+    e.stopPropagation();
+
+    if (e.key === "Enter") {
+      e.preventDefault();
+      const targetWord = typingWords[typingWordIndex] || "";
+      if (typingInputElement.value.trim() === targetWord) {
+        typingWordIndex++;
+        if (typingWordIndex < typingWords.length) {
+          setupTypingQuestion();
+        } else {
+          finishTypingMiniGame();
+        }
+      } else if (typingStatusElement) {
+        typingStatusElement.textContent = "ちがうみたい！もう一度入力してみて";
+      }
+    }
+  });
+}
 });
