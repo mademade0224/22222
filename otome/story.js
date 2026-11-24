@@ -146,7 +146,7 @@ const story = [
       { jdisplay: "あみじすか",
         answers: ["あみじすか","amijisuka"]},
       { jdisplay: "規律ある自由",
-        answers: ["kiritsuarujiyuu", "kirituarujiyuu", "きりつあるじゆう"]｝, // 出題リスト（1問だけでもOK）
+        answers: ["kiritsuarujiyuu", "kirituarujiyuu", "きりつあるじゆう"]}, // 出題リスト（1問だけでもOK）
     nextId: "route_a_10" // クリアしたら route_a_10 へ進む
   },
   {
