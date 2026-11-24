@@ -176,6 +176,22 @@ function changeBackground(nextBg) {
   }, 350);
 }
 
+// nextId が指定されていれば該当 id のステップへ移動し、なければ次の番号へ進む
+function goToNextStep(item) {
+  if (item && item.nextId) {
+    const targetIndex = story.findIndex((step) => step.id === item.nextId);
+    if (targetIndex !== -1) {
+      currentIndex = targetIndex;
+      showStep();
+      return;
+    }
+    console.warn("指定された nextId が見つかりません:", item.nextId);
+  }
+
+  currentIndex++;
+  showStep();
+}
+
 function showStep() {
   const step = story[currentIndex];
 
@@ -292,15 +308,13 @@ function showChoices(choices) {
           nextButton.textContent = "次へ ▼";
           nextButton.style.display = "block";
           nextButton.onclick = () => {
-            currentIndex++;
-            showStep();
+            goToNextStep(choice);
           };
         });
         return;
       }
 
-      currentIndex++;
-      showStep();
+      goToNextStep(choice);
     });
 
     choicesElement.appendChild(button);
@@ -309,8 +323,8 @@ function showChoices(choices) {
 
 function nextStep() {
   if (isTyping) return;
-  currentIndex++;
-  showStep();
+  const step = story[currentIndex];
+  goToNextStep(step);
 }
 
 function showEnd() {
