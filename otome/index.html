@@ -18,11 +18,22 @@
       <section id="message-box">
         <div id="name"></div>
         <div id="text"></div>
-        <div id="typing-area" style="display: none;">
-          <div id="typing-target"></div>
-          <input id="typing-input" type="text" autocomplete="off" placeholder="ここに入力してEnter">
-          <div id="typing-status"></div>
+        <!-- PCタイピングウィンドウ -->
+      <div id="pc-window" class="is-hidden" aria-hidden="true">
+        <div class="pc-frame">
+          <div class="pc-topbar">
+            <span class="pc-dots">● ● ●</span>
+            <span class="pc-title">TERMINAL - CALL_ROOM_01</span>
+          </div>
+          <div class="pc-screen">
+            <p class="pc-guide">入力</p>
+            <div id="typing-target"></div>
+            <input id="typing-input" type="text" autocomplete="off" placeholder="ここに入力">
+            <div id="typing-status"></div>
+          </div>
+          <div class="pc-stand"></div>
         </div>
+      </div>
         <div id="choices"></div>
         <button id="next-button" type="button">次へ ▼</button>
       </section>
