@@ -481,5 +481,102 @@ function setupTypingQuestion() {
   }
   if (typingInputElement) {
     typingInputElement.value = "";
+    setTimeout(() => {
+      typingInputElement.focus();
+    }, 60);
   }
 }
+
+function advanceTypingQuestion() {
+  typingWordIndex++;
+  if (typingWordIndex < typingWords.length) {
+    setupTypingQuestion();
+  } else {
+    finishTypingMiniGame();
+  }
+}
+
+function finishTypingMiniGame() {
+  isTypingGame = false;
+  if (typingInputElement) {
+    typingInputElement.value = "";
+    typingInputElement.blur();
+  }
+  if (typingStatusElement) {
+    typingStatusElement.textContent = "COMPLETE!";
+  }
+
+  const nextTargetId = typingNextId;
+  typingNextId = null;
+
+  if (pcWindowElement) {
+    pcWindowElement.classList.add("is-hidden");
+    pcWindowElement.setAttribute("aria-hidden", "true");
+    pcCloseTimer = setTimeout(() => {
+      goToNextStep({ nextId: nextTargetId });
+    }, 240);
+  } else {
+    goToNextStep({ nextId: nextTargetId });
+  }
+}
+
+if (typingInputElement) {
+  typingInputElement.addEventListener("input", () => {
+    if (!isTypingGame) return;
+    const currentItem = typingWords[typingWordIndex];
+    const validAnswers = getTargetAnswers(currentItem);
+    const typed = typingInputElement.value.toLowerCase();
+
+    if (validAnswers.includes(typed)) {
+      advanceTypingQuestion();
+    }
+  });
+
+  typingInputElement.addEventListener("keydown", (e) => {
+    if (e.isComposing) return;
+    if (!isTypingGame) return;
+
+    e.stopPropagation();
+
+    if (e.key === "Enter") {
+      e.preventDefault();
+      const currentItem = typingWords[typingWordIndex];
+      const validAnswers = getTargetAnswers(currentItem);
+      const typed = typingInputElement.value.trim().toLowerCase();
+
+      if (validAnswers.includes(typed)) {
+        advanceTypingQuestion();
+      } else if (typingStatusElement) {
+        typingStatusElement.textContent = "ちがうみたい！もう一度入力してみて";
+      }
+    }
+  });
+}
+
+// Enterキーで「次へ ▼」（または表示中の進行ボタン）を押す
+document.addEventListener("keydown", (e) => {
+  if (e.isComposing) return;
+  if (isTypingGame) return;
+
+  if (e.key === "Enter") {
+    if (helpModal && !helpModal.classList.contains("is-hidden")) {
+      e.preventDefault();
+      helpModal.classList.add("is-hidden");
+      return;
+    }
+
+    if (document.activeElement === playerNameInput) return;
+    if (nameInputScreen && nameInputScreen.style.display !== "none") return;
+
+    if (typeof isTyping !== "undefined" && isTyping) {
+      e.preventDefault();
+      finishTyping();
+      return;
+    }
+
+    if (nextButton && nextButton.style.display !== "none") {
+      e.preventDefault();
+      nextButton.click();
+    }
+  }
+});
