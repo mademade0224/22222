@@ -141,12 +141,20 @@ const story = [
     type: "typing",
     name: "ノシロ",
     text: "タイピングスタートだよ！",
-    words: [{ jdisplay: "発調考見挑振",
-        answers: ["hattyoukoukenntyoushinn", "hattyoukoukenntyousinn", "はっちょうこうけんちょうしん"]},
-      { jdisplay: "あみじすか",
-        answers: ["あみじすか","amijisuka"]},
-      { jdisplay: "規律ある自由",
-        answers: ["kiritsuarujiyuu", "kirituarujiyuu", "きりつあるじゆう"]}, // 出題リスト（1問だけでもOK）
+   words: [
+      {
+        display: "発調考見挑振",
+        answers: ["hattyoukoukenntyoushinn", "hattyoukoukenntyousinn", "はっちょうこうけんちょうしん"]
+      },
+      {
+        display: "あみじすか",
+        answers: ["あみじすか", "amijisuka"]
+      },
+      {
+        display: "規律ある自由",
+        answers: ["kiritsuarujiyuu", "kirituarujiyuu", "きりつあるじゆう"]
+      }
+    ], // ← ここに配列を閉じる ] と , が必要！
     nextId: "route_a_10" // クリアしたら route_a_10 へ進む
   },
   {
