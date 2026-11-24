@@ -160,19 +160,24 @@ const story = [
   {
     id: "route_a_10",
     name: "ノシロ",
-    text: "そろそろHRに行こうか。",
+    text: "いいね！",
     nextId: "after_choice"
   },
   {
     id: "route_skip_1",
+    chara: null,
     name: "ノシロ",
     text: "覚えてろよー",
-    nextId: "after_choice"
+  },
+  {
+    id: "route_skip_2",
+    name: "YOU",
+    text: "急がなくちゃ！",
   },
   {
     id: "after_choice",
     name: "YOU",
-    text: "やばい！"
+    text: "ああ"
   },
   {
     type: "ending",
