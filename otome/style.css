@@ -239,35 +239,104 @@ body {
   font-size: 14px;
 }
 
-#typing-area {
-  margin-top: 12px;
+/* PCウィンドウ */
+#pc-window {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background: rgba(10, 8, 18, 0.55);
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 0.24s ease, transform 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 25;
+}
+
+#pc-window.is-hidden {
+  opacity: 0;
+  transform: scale(0.86);
+  pointer-events: none;
+}
+
+.pc-frame {
+  width: min(92%, 620px);
+  background: #232634;
+  border: 3px solid #9aa5ce;
+  border-radius: 14px 14px 8px 8px;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.75);
+  overflow: hidden;
+}
+
+.pc-topbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  background: #1a1b26;
+  border-bottom: 1px solid #414868;
+  font-size: 12px;
+  color: #a9b1d6;
+}
+
+.pc-dots {
+  color: #f7768e;
+  letter-spacing: 2px;
+  font-size: 10px;
+}
+
+.pc-screen {
+  padding: 28px 24px 32px;
+  min-height: 240px;
+  background: #11131c;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.pc-guide {
+  margin: 0 0 10px;
+  font-size: 13px;
+  color: #7aa2f7;
 }
 
 #typing-target {
-  font-size: 20px;
+  font-size: 28px;
   font-weight: bold;
-  letter-spacing: 0.08em;
-  color: #e6d8f2;
-  margin-bottom: 8px;
+  letter-spacing: 0.1em;
+  color: #e0af68;
+  margin-bottom: 16px;
 }
 
 #typing-input {
-  width: 100%;
-  max-width: 320px;
-  padding: 8px 12px;
-  font-size: 16px;
-  color: #ffffff;
-  background: #17151d;
-  border: 1px solid #d9c7e8;
-  border-radius: 6px;
+  width: min(100%, 340px);
+  padding: 10px 14px;
+  font-size: 18px;
+  text-align: center;
+  color: #c0caf5;
+  background: #1a1b26;
+  border: 2px solid #7aa2f7;
+  border-radius: 8px;
+  outline: none;
+}
+
+#typing-input:focus {
+  border-color: #bb9af7;
+  box-shadow: 0 0 0 3px rgba(187, 154, 247, 0.25);
 }
 
 #typing-status {
-  margin-top: 6px;
+  margin-top: 12px;
   font-size: 13px;
-  color: #cfc3dc;
+  color: #9aa5ce;
+  min-height: 20px;
 }
 
-#close-help-button:hover {
-  background: #987bb4;
+.pc-stand {
+  height: 12px;
+  background: #3b4261;
+  border-top: 1px solid #565f89;
 }
