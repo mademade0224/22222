@@ -375,8 +375,13 @@ function restartGame() {
   isTyping = false;
   isTypingGame = false;
   onTypingComplete = null;
+  if (typingInputElement) {
+    typingInputElement.value = "";
+    typingInputElement.blur();
+  }
   if (pcWindowElement) {
     pcWindowElement.classList.add("is-hidden");
+    pcWindowElement.setAttribute("aria-hidden", "true");
   }
   currentIndex = 0;
   currentCharaOwner = "";
@@ -415,6 +420,34 @@ if (!nameInputScreen) {
 }
 
 // --- PCタイピングミニゲーム処理 ---
+function getTargetAnswers(item) {
+  if (!item) return [];
+
+  if (typeof item === "object") {
+    if (Array.isArray(item.answers)) {
+      return item.answers.map((ans) => String(ans).toLowerCase());
+    }
+    if (item.roma) {
+      return [String(item.roma).toLowerCase()];
+    }
+  }
+
+  return [String(item).toLowerCase()];
+}
+
+function getTypingLabelText(item) {
+  if (!item) return "";
+  if (typeof item === "object") {
+    const label = item.display || item.jp || "";
+    const hintRoma = item.roma || (Array.isArray(item.answers) ? item.answers[0] : "");
+    if (label && hintRoma) {
+      return `${label}（${hintRoma}）`;
+    }
+    return label || hintRoma;
+  }
+  return String(item);
+}
+
 function startTypingMiniGame(step) {
   clearTimeout(pcCloseTimer);
   isTypingGame = true;
@@ -438,110 +471,13 @@ function startTypingMiniGame(step) {
 }
 
 function setupTypingQuestion() {
-  const item = typingWords[typingWordIndex];
-  const isObj = typeof item === "object" && item !== null;
+  const currentItem = typingWords[typingWordIndex];
 
   if (typingTargetElement) {
-    typingTargetElement.textContent = isObj
-      ? `${item.jp}（${item.roma}）`
-      : item;
+    typingTargetElement.textContent = getTypingLabelText(currentItem);
   }
   if (typingStatusElement) {
     typingStatusElement.textContent = `問題 ${typingWordIndex + 1} / ${typingWords.length}`;
   }
   if (typingInputElement) {
     typingInputElement.value = "";
-    setTimeout(() => {
-      typingInputElement.focus();
-    }, 60);
-  }
-}
-function finishTypingMiniGame() {
-  isTypingGame = false;
-  if (typingInputElement) {
-    typingInputElement.value = "";
-  }
-  if (typingStatusElement) {
-    typingStatusElement.textContent = "COMPLETE!";
-  }
-
-  const nextTargetId = typingNextId;
-  typingNextId = null;
-
-  if (pcWindowElement) {
-    pcWindowElement.classList.add("is-hidden");
-    pcWindowElement.setAttribute("aria-hidden", "true");
-    pcCloseTimer = setTimeout(() => {
-      goToNextStep({ nextId: nextTargetId });
-    }, 240);
-  } else {
-    goToNextStep({ nextId: nextTargetId });
-  }
-}
-
-typingInputElement.addEventListener("input", () => {
-    if (!isTypingGame) return;
-    const item = typingWords[typingWordIndex];
-    const targetWord = typeof item === "object" && item !== null ? item.roma : (item || "");
-    const typed = typingInputElement.value;
-
-    if (typed === targetWord) {
-      typingWordIndex++;
-      if (typingWordIndex < typingWords.length) {
-        setupTypingQuestion();
-      } else {
-        finishTypingMiniGame();
-      }
-    }
-  });
-
-  typingInputElement.addEventListener("keydown", (e) => {
-    if (e.isComposing) return;
-    if (!isTypingGame) return;
-
-    e.stopPropagation();
-
-   if (e.key === "Enter") {
-      e.preventDefault();
-      const item = typingWords[typingWordIndex];
-      const targetWord = typeof item === "object" && item !== null ? item.roma : (item || "");
-      if (typingInputElement.value.trim() === targetWord) {
-        typingWordIndex++;
-        if (typingWordIndex < typingWords.length) {
-          setupTypingQuestion();
-        } else {
-          finishTypingMiniGame();
-        }
-      } else if (typingStatusElement) {
-        typingStatusElement.textContent = "not good";
-      }
-    }
-});
-                                      
-// Enterキーで「次へ ▼」（または表示中の進行ボタン）を押す
-document.addEventListener("keydown", (e) => {
-  if (e.isComposing) return;
-  if (isTypingGame) return;
-
-  if (e.key === "Enter") {
-    if (helpModal && !helpModal.classList.contains("is-hidden")) {
-      e.preventDefault();
-      helpModal.classList.add("is-hidden");
-      return;
-    }
-
-    if (document.activeElement === playerNameInput) return;
-    if (nameInputScreen && nameInputScreen.style.display !== "none") return;
-
-    if (typeof isTyping !== "undefined" && isTyping) {
-      e.preventDefault();
-      finishTyping();
-      return;
-    }
-
-    if (nextButton && nextButton.style.display !== "none") {
-      e.preventDefault();
-      nextButton.click();
-    }
-  }
-});
