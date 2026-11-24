@@ -438,9 +438,13 @@ function startTypingMiniGame(step) {
 }
 
 function setupTypingQuestion() {
-  const currentWord = typingWords[typingWordIndex];
+  const item = typingWords[typingWordIndex];
+  const isObj = typeof item === "object" && item !== null;
+
   if (typingTargetElement) {
-    typingTargetElement.textContent = currentWord;
+    typingTargetElement.textContent = isObj
+      ? `${item.jp}（${item.roma}）`
+      : item;
   }
   if (typingStatusElement) {
     typingStatusElement.textContent = `問題 ${typingWordIndex + 1} / ${typingWords.length}`;
@@ -452,7 +456,6 @@ function setupTypingQuestion() {
     }, 60);
   }
 }
-
 function finishTypingMiniGame() {
   isTypingGame = false;
   if (typingInputElement) {
